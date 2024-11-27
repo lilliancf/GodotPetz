@@ -12,7 +12,8 @@ var last_action = -1
 signal action_done
 
 func _ready():
-	for a in scp.get_actions():
+	for i in scp.get_actions():
+		var a = scp.get_actions()[i];
 		var ar = graph.get(a.startState, [])
 		ar.push_back({endState = a.endState, actionId = a.id})
 		graph[a.startState] = ar

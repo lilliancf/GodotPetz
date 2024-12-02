@@ -415,6 +415,8 @@ func _draw():
 			if ball.idx not in iris_balls and ball.idx not in omitted_balls:
 				var p = ball.pos
 				var pos = Vector2(p.x, p.y)
+                                #due to the nature of shader programs, passing non round numbers will cause jittery effect while the pet moves
+                                var pos2 = Vector2D(floor(pos.x + global_position.x), floor(pos.y + global_position.y))
 				var animballsize = frame.get("sizediffs", Dictionary()).get(ball.idx, 0)
 				var size
 				if ball.idx < ball_sizes.size():
@@ -427,14 +429,14 @@ func _draw():
 					#ball_polys[ball.idx].visible = false
 				pos *= draw_scale;
 				ball_polys[ball.idx].position = pos
-				ball_polys[ball.idx].material.set_shader_parameter("center", pos + global_position)
+				ball_polys[ball.idx].material.set_shader_parameter("center", pos2)
 				move_child(ball_polys[ball.idx], ctr)
 				if ball.idx in eye_balls:
 					var iriscnt = eye_balls.find(ball.idx)
 					var iris_no = iris_balls[iriscnt]
 					var iris = new_ball_positions_by_id[iris_no]
 					pos = Vector2(iris.pos.x, iris.pos.y) * draw_scale
-					ball_polys[ball.idx].material.set_shader_parameter("iris_center", pos + global_position)
+					ball_polys[ball.idx].material.set_shader_parameter("iris_center", pos2)
 					var irisanimballsize = frame.get("sizediffs", Dictionary()).get(iris_no, 0)
 					var iris_size = (((ball_sizes[iris_no] + irisanimballsize + lnz.balls[iris_no].size + ball.get("ext_size", 0)) * ball_scale) * ball.get("ext_size_scale", 1.0)) / 2.0
 					ball_polys[ball.idx].material.set_shader_parameter("iris_radius", iris_size - 1)

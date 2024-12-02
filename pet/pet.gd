@@ -416,7 +416,7 @@ func _draw():
 				var p = ball.pos
 				var pos = Vector2(p.x, p.y)
                                 #due to the nature of shader programs, passing non round numbers will cause jittery effect while the pet moves
-                                var pos2 = Vector2D(floor(pos.x + global_position.x), floor(pos.y + global_position.y))
+                                var pos2 = Vector2(floor(pos.x + global_position.x), floor(pos.y + global_position.y))
 				var animballsize = frame.get("sizediffs", Dictionary()).get(ball.idx, 0)
 				var size
 				if ball.idx < ball_sizes.size():
